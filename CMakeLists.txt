@@ -3,4 +3,4 @@ project(trabalho_pratico_prog1 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(trabalho_pratico_prog1 main.c)
+add_executable(trabalho_pratico_prog1 main.c listas.c listas.h)
