@@ -107,4 +107,21 @@ void inserirUser(UElemento *ListU, UTILIZADOR dados){
     } while (tipo != 1 || tipo !=0);
 }
 
+/*
+int verifyLogin(ELEM_USER iniList, char name[100], char pass[100], intuid){
+    ELEM_USER *users = NULL;
+    for(users = iniList; users != NULL; users=users->next){
+        if((strcmp(users->info.user, name) == 0) && (strcmp(users->info.pass, pass)) == 0 && users->info.type == 1){
+            *uid = users->info.id;
+            return 1;
+        }
+        if((strcmp(users->info.user, name) == 0) && (strcmp(users->info.pass, pass)) == 0 && users->info.type == 0){
+            *uid = users->info.id;
+            return 0;
+        }
+    }
+    return -1;
+}
+
+ */
 
