@@ -122,10 +122,5 @@ int main() {
             case 3:
                 break;
         }
-    //}
-    //printf("%d", num());
-    //int  n = 0;
-    //n = num2(3,4);
-    //printf("%d", n);
     return 0;
 }

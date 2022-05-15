@@ -56,12 +56,12 @@ int removeInicioLista(UElemento **iniLista){
 }
 
 int getSizeIt(UElemento *iniLista){
-    UElemento *aux1=NULL;
+    UElemento *aux =NULL;
     int totElem=0;
-    aux1 = iniLista;
-    while(aux1!= NULL){
+    aux = iniLista;
+    while(aux != NULL){
         totElem++;
-        aux1 = aux1->next;
+        aux = aux->next;
     }
     return totElem;
 }
