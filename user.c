@@ -27,7 +27,7 @@ int login(UElemento **iniListaU, int *id){
     scanf("%s", &nome);
     printf("Introduza a pp: ");
     scanf("%s", &pp);
-    int verifica = verificaLogin(*iniListaU, (int *) &id, nome, pp);
+    int verifica = verificaLogin(*iniListaU, id, nome, pp);
     if (verifica == -1) {
         printf("Login falhado");
         sleep(3);
@@ -155,18 +155,18 @@ void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
 }
 
 //convidado
-void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int *id){
+void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id){
     int flag, resEditUser;
     UElemento *aux = NULL;
     for (aux=iniListaU; aux!=NULL ;aux = aux->next) {
-        if (*id == aux->info.id){
+        if (id == aux->info.id){
             printf("\n Utilizador --- [ %d ]", aux->info.id);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
             printf("\n 2) Palavra Passe: %s", aux->info.pp);
             printf("\n 3) Tipo de utilizador: %d", aux->info.tipoDeUtilizador);
         }
     }
-    printf("Pretende alterar dados? Sim(1) ou Não(0)");
+    printf("\nPretende alterar dados? Sim(1) ou Não(0)");
     scanf("%d", &flag);
     if (flag == 1){
         printf("\nEscolha o campo a alterar (1 - 8): ");

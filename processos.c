@@ -97,6 +97,7 @@ void ListarInicio(PELEMENTO *iniLista){
         aux = aux->next;
     }
 }
+
 void ListarFim (PELEMENTO *fimLista){
     PELEMENTO *aux=fimLista;
     while (aux!=NULL) {
@@ -137,16 +138,107 @@ int tamanhoP(PELEMENTO *iniListaP){
     return totElem;
 }
 
-void imprimeElementosDaListaP(PELEMENTO *iniListaP, int *id, int admin){
+void imprimeElementosDaListaP(PELEMENTO *iniListaP, int id, int admin){
     PELEMENTO *aux= iniListaP;
-    while (aux!=NULL) {
-        if(admin == 0 && *id == aux->info.dono){
-            printf("PID: %d, Nome: %s,Descrição: %s\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.descricao);
-            aux = aux->next;
-        }else if(admin == 1){
-            printf("PID: %d, Nome: %s,Descrição: %s\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.descricao);
-            aux = aux->next;
+    while (aux!=NULL){
+        if(admin == 1) printf("PID: %d, Nome: %s,Descrição: %s\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.descricao);
+        else if(aux->info.dono == id) printf("PID: %d, Nome: %s,Descrição: %s\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.descricao);
+        aux = aux->next;
+    }
+}
+
+void relatorioPorNome(PROCESSO dados){
+    FILE *fp = NULL;
+    fp = fopen("relatorioProcessos.txt", "w");
+    if (fp == NULL){
+        printf("Erro ao abrir o ficheiro");
+    }
+    fprintf(fp, "Pid: %d, Nome: %s, Descrição: %s", dados.ProcessID, dados.nomeUtilizador, dados.descricao);
+    fclose(fp);
+}
+
+void bubbleSort(char nomes[][100], int qtd, PELEMENTO *iniListaP){
+    FILE *fp = NULL;
+    fp = fopen("relatorioProcessos.txt", "w");
+    if (fp == NULL){
+        printf("Erro ao abrir o ficheiro");
+    }
+    PELEMENTO *aux = iniListaP;
+    //passar de lista para array
+    while (aux!=NULL){
+        for (int i = 0; i < qtd; ++i) {
+
         }
+        aux = aux->next;
+    }
+    // ordenado
+    int x=0,j=0;
+    char temp[100];
+    for (x=0; x < qtd; x++) {
+        for (j=0; j < qtd-1 ; j++) {
+            if (strcmp(nomes[j],nomes[j+1]) > 0) {
+                strcpy(temp,nomes[j]);
+                strcpy(nomes[j],nomes[j+1]);
+                strcpy(nomes[j+1],temp);
+            }
+        }
+    }
+    // quando a string do array ordenado for igual á da lista fprintf
+    PELEMENTO *aux2 = iniListaP;
+    while (aux2!=NULL){
+        for (int i = 0; i < qtd; ++i){
+            if(nomes[i] == aux2->info.nomeUtilizador){
+                fprintf(fp, "Pid: %d, Nome: %s, Descrição: %s", aux2->info.ProcessID, aux2->info.nomeUtilizador, aux2->info.descricao);
+            }
+        }
+        aux2 = aux2->next;
+    }
+    fclose(fp);
+}
+
+void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *ListaU){
+    UElemento *auxU = NULL;
+    PELEMENTO *aux = NULL;
+    //quando o id do user for igual ao dono do processo printa
+    char nome[50];
+    int flag, id;
+    system("cls");
+    printf("Introduza o nome do utilizador que prentende listar: ");
+    scanf("%s", &nome);
+    if(strlen(nome) < 2){
+        do{
+            printf("\nPor favor insira pelo menos 2 caracteres para procurar pelo nome: ");
+            scanf("%s", &nome);
+            fflush(stdin);
+        }while (strlen(nome) < 2);
+    }
+    for (auxU = ListaU; auxU!=NULL ;auxU = auxU->next){
+        if(strstr(nome, auxU->info.nomeUtilizador)){
+            flag = 1;
+        }
+    }
+    if (flag == 1){
+        printf("Utilizadores que contem '%s'\n", nome);
+        for (auxU = ListaU; auxU!=NULL ;auxU = auxU->next){
+            if(strstr(nome, auxU->info.nomeUtilizador)){
+                printf("Id: %d, Nome: %s, Tipo: %d\n", auxU->info.id, auxU->info.nomeUtilizador, auxU->info.tipoDeUtilizador);
+            }
+        }
+        printf("Qual o Utilizador que quer escolher?: ");
+        scanf("%d", &id);
+        printf("** Lista urgente **\n");
+        for (aux = iniListaU; aux!=NULL ;aux = aux->next){
+            if(id == aux->info.dono){
+                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
+            }
+        }
+        printf("** Lista Normal **\n");
+        for (aux = iniListaN; aux!=NULL ;aux = aux->next){
+            if(id == aux->info.dono){
+                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
+            }
+        }
+
     }
 }
 
@@ -167,7 +259,7 @@ int menuConvidado(){
     return resConvidado;
 }
 
-int gestaoProcesso(int admin){
+int gestaoProcesso(){
     int resProcesso;
     do {
         system("cls");
@@ -175,10 +267,44 @@ int gestaoProcesso(int admin){
         printf("1 - Inserir Processo\n");
         printf("2 - Remover Processo\n");
         printf("3 - Imprimir os meus Processos\n");
-        if(admin == 1) printf("4 - Ver todos os Processos");
         printf("0 - Sair\n");
         printf("Escolha a opcao desejada: ");
         scanf("%d", &resProcesso);
     } while (resProcesso > 4 || resProcesso < 0);
     return resProcesso;
 }
+
+void limite(PELEMENTO *iniListaU, PELEMENTO *iniListaN,PELEMENTO *iniListaR, PELEMENTO *FimListaR,  PROCESSO dados){
+    int lim = 3;
+    int tamU, tamN;
+    tamU = tamanhoP(iniListaU);
+    tamN = tamanhoP(iniListaN);
+    if (tamU > lim){
+        printf("Já ultrapassou o limite de processos urgentes, o limite é %d", tamU);
+        InserirInicioListaP(&iniListaR, &FimListaR, dados);
+    }
+    if (tamN > lim){
+        printf("Já ultrapassou o limite de processos urgentes, o limite é %d", tamU);
+        InserirInicioListaP(&iniListaR, &FimListaR, dados);
+    }
+}
+
+int menuEstatisticas(){
+    int resmenuEstatisticas;
+    do{
+        system("cls");
+        printf("** Estatísticas **\n");
+        printf("1 - Número de processos processados de cada lista\n");
+        printf("2 - Número de processos em espera em cada uma das lista\n");
+        printf("3 - Número total de processos rejeitados\n");
+        printf("4 - Processo que mais tempo e menos tempo demorou a ser executado\n");
+        printf("5 - Tempo médio de espera dos processos de cada uma das listas de espera\n");
+        printf("6 - Número atual de processos normais e urgentes de um determinado utilizador\n");
+        printf("0 - Sair\n");
+        printf("Escolha a opcao desejada: ");
+        scanf("%d", &resmenuEstatisticas);
+    }while (resmenuEstatisticas > 6 || resmenuEstatisticas < 0);
+    return resmenuEstatisticas;
+
+}
+

@@ -29,6 +29,6 @@ int tamanhoLista(UElemento *iniListaU);
 int escreveFicheiroU(UElemento *iniListaU);
 void imprimeListaU(UElemento *iniListaU);
 void alterarUser(UElemento *iniListaU, UTILIZADOR dados);
-void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int *id);
+void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id);
 
 #endif //UNTITLED4_USER_H

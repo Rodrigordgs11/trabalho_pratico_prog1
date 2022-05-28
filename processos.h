@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include "user.h"
 #ifndef TRABALHO_PRATICO_PROG1_PROCESSOS_H
 #define TRABALHO_PRATICO_PROG1_PROCESSOS_H
 
@@ -14,8 +16,8 @@ typedef struct processo{
     char nomeUtilizador[50];
     char descricao[50];
     int dono;
-    struct tm *tempCriado; /* o momento temporal em que o mesmo foi registado */
-    struct tm *tempExecutado; /* temporal em que foi executado*/
+    struct tm tempCriado; /* o momento temporal em que o mesmo foi registado */
+    struct tm tempExecutado; /* temporal em que foi executado*/
 } PROCESSO;
 
 typedef struct ElemP {
@@ -24,15 +26,18 @@ typedef struct ElemP {
     struct ElemP *before; //apontador para o próximo nó
 }PELEMENTO;
 
-void imprimeElementosDaListaP(PELEMENTO *iniListaP, int *id, int admin);
+void imprimeElementosDaListaP(PELEMENTO *iniListaP, int id, int admin);
 int removeInicioListaP(PELEMENTO **iniListaP);
 int InserirFimListaP (PELEMENTO **iniLista, PELEMENTO **fimLista, PROCESSO newInfo);
 int InserirInicioListaP (PELEMENTO **iniLista, PELEMENTO **fimLista,PROCESSO newInfo);
 int lerProcessos(PELEMENTO **IniLista, PELEMENTO **FimLista, int tipoDeProcesso);
 int escreveFicheiroP(PELEMENTO *iniListaN, PELEMENTO *iniListaU, PELEMENTO *iniListaR, PELEMENTO *iniListaP);
 int tamanhoP(PELEMENTO *iniListaP);
+void limite(PELEMENTO *iniListaU, PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *FimListaR, PROCESSO dados);
+void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *ListaU);
 
-int gestaoProcesso(int admin);
+int gestaoProcesso();
 int menuConvidado();
+int menuEstatisticas();
 
 #endif //TRABALHO_PRATICO_PROG1_PROCESSOS_H
