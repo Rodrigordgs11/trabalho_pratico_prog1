@@ -1,14 +1,17 @@
 //
-// Created by rodri on 15/05/2022.
+// Created by rodri on 23/05/2022.
 //
+
+#ifndef UNTITLED4_USER_H
+#define UNTITLED4_USER_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifndef TRABALHO_PRATICO_PROG1_USER_H
-#define TRABALHO_PRATICO_PROG1_USER_H
+#include <unistd.h>
 
 typedef struct utilizador{
+    int id;
     int tipoDeUtilizador;  /* 1 - admin, 0 - convidado */
     char nomeUtilizador[50];
     char pp[50];
@@ -17,10 +20,15 @@ typedef struct utilizador{
 typedef struct ElemU {
     UTILIZADOR info; //conteúdo do nó.
     struct ElemU *next; //apontador para o próximo nó
-}UElemento;
+} UElemento;
 
-void imprimeElementosDaLista(UElemento *iniLista);
-int insertEndList(UElemento **iniListU, UTILIZADOR newUser);
-int removeInicioLista(UElemento **iniLista);
+int login(UElemento **iniListaU, int *id);
+int InserirFimLista(UElemento **iniListaU, UTILIZADOR novoUtilizador);
+int lerUtilizador(UElemento **iniListaU);
+int tamanhoLista(UElemento *iniListaU);
+int escreveFicheiroU(UElemento *iniListaU);
+void imprimeListaU(UElemento *iniListaU);
+void alterarUser(UElemento *iniListaU, UTILIZADOR dados);
+void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int *id);
 
-#endif //TRABALHO_PRATICO_PROG1_USER_H
+#endif //UNTITLED4_USER_H
