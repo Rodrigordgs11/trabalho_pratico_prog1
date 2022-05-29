@@ -26,6 +26,7 @@ typedef struct ElemP {
     struct ElemP *before; //apontador para o próximo nó
 }PELEMENTO;
 
+PROCESSO pedeDadosP(int id, PELEMENTO *iniListaN, PELEMENTO *iniListaU, PELEMENTO *iniListaR, PELEMENTO *iniListaP);
 void imprimeElementosDaListaP(PELEMENTO *iniListaP, int id, int admin);
 int removeInicioListaP(PELEMENTO **iniListaP);
 int InserirFimListaP (PELEMENTO **iniLista, PELEMENTO **fimLista, PROCESSO newInfo);
@@ -33,7 +34,6 @@ int InserirInicioListaP (PELEMENTO **iniLista, PELEMENTO **fimLista,PROCESSO new
 int lerProcessos(PELEMENTO **IniLista, PELEMENTO **FimLista, int tipoDeProcesso);
 int escreveFicheiroP(PELEMENTO *iniListaN, PELEMENTO *iniListaU, PELEMENTO *iniListaR, PELEMENTO *iniListaP);
 int tamanhoP(PELEMENTO *iniListaP);
-void limite(PELEMENTO *iniListaU, PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *FimListaR, PROCESSO dados);
 void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *ListaU);
 
 int gestaoProcesso();

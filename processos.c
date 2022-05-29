@@ -4,14 +4,31 @@
 
 #include "processos.h"
 
-/*
-  time_t rawtime;
-  time(&rawtime);*/
-
 /* LISTAS */
 
 //DUPLAMENTE LIGADAS
 
+PROCESSO pedeDadosP(int id, PELEMENTO *iniListaN, PELEMENTO *iniListaU, PELEMENTO *iniListaR, PELEMENTO *iniListaP){        //pede dados para a estrutuda de dados do Processo
+    time_t rawtime;
+    time( &rawtime );
+    PROCESSO dados;
+    int tipoDeProcessoP, tamLista;
+    tamLista = tamanhoP(iniListaN) + tamanhoP(iniListaR) +
+               tamanhoP(iniListaU) + tamanhoP(iniListaP);
+    dados.ProcessID = tamLista + 1;
+    do{
+        printf("Urgente(1) ou Normal(0): ");
+        scanf("%d", &tipoDeProcessoP);
+    } while ( tipoDeProcessoP > 1 || tipoDeProcessoP < 0 );
+    dados.tipoProcesso = tipoDeProcessoP;
+    dados.tempCriado = *localtime( &rawtime );
+    dados.dono = id;
+    printf("Nome: ");
+    scanf("%s", &dados.nomeUtilizador);
+    printf("Descrição: ");
+    scanf("%s", &dados.descricao);
+    return dados;
+}
 
 int lerProcessos(PELEMENTO **IniLista, PELEMENTO **FimLista, int tipoDeProcesso){
     PROCESSO processo;
@@ -203,6 +220,7 @@ void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *Li
     char nome[50];
     int flag, id;
     system("cls");
+    imprimeListaU(ListaU);
     printf("Introduza o nome do utilizador que prentende listar: ");
     scanf("%s", &nome);
     if(strlen(nome) < 2){
@@ -274,21 +292,6 @@ int gestaoProcesso(){
     return resProcesso;
 }
 
-void limite(PELEMENTO *iniListaU, PELEMENTO *iniListaN,PELEMENTO *iniListaR, PELEMENTO *FimListaR,  PROCESSO dados){
-    int lim = 3;
-    int tamU, tamN;
-    tamU = tamanhoP(iniListaU);
-    tamN = tamanhoP(iniListaN);
-    if (tamU > lim){
-        printf("Já ultrapassou o limite de processos urgentes, o limite é %d", tamU);
-        InserirInicioListaP(&iniListaR, &FimListaR, dados);
-    }
-    if (tamN > lim){
-        printf("Já ultrapassou o limite de processos urgentes, o limite é %d", tamU);
-        InserirInicioListaP(&iniListaR, &FimListaR, dados);
-    }
-}
-
 int menuEstatisticas(){
     int resmenuEstatisticas;
     do{
@@ -307,4 +310,3 @@ int menuEstatisticas(){
     return resmenuEstatisticas;
 
 }
-

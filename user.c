@@ -4,6 +4,32 @@
 
 #include "user.h"
 
+UTILIZADOR pedeDados(UElemento *ListaU){     //pede dados para a estrutuda de dados do Utilizador
+    UTILIZADOR dados;
+    int tipo;
+    printf("Introduza o seu nome: ");
+    scanf("%s", &dados.nomeUtilizador);
+    printf("Introduza a password: ");
+    scanf("%s", &dados.pp);
+    dados.id = tamanhoLista(ListaU) + 1;
+    do {
+        printf("Administrador(1) ou Utilizador(0)");
+        scanf("%d", &dados.tipoDeUtilizador);
+        tipo = dados.tipoDeUtilizador;
+    } while (tipo > 1 || tipo < 0);
+    return dados;
+}
+
+void UserDefault(UElemento *Lista, UTILIZADOR dados){
+    FILE *fp = fopen("utilizadores.dat", "rb");     //
+    if (fp == NULL){
+        dados = pedeDados(Lista);
+        dados.id = tamanhoLista(Lista) + 1;
+        InserirFimLista(&Lista, dados);
+        escreveFicheiroU(Lista);
+    }
+}
+
 int verificaLogin(UElemento *iniListaU, int *id, char nome[50], char pp[50]){
     UElemento *utilizadores = NULL;
     for(utilizadores = iniListaU; utilizadores != NULL; utilizadores=utilizadores->next){
@@ -116,7 +142,7 @@ void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
     UElemento *aux=NULL;
     int id, flag = 0, resEditUser;
     imprimeListaU(iniListaU);
-    printf("Introduza o id do utilizador que pretende alterar");
+    printf("Introduza o id do utilizador que pretende alterar: ");
     scanf("%d", &id);
     printf("\n ... A procurar ...\n");
     sleep(2);
@@ -130,7 +156,7 @@ void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
         }
     }
     if (flag == 1 ){
-        printf("\nEscolha o campo a alterar (1 - 8): ");
+        printf("\nEscolha o campo a alterar (1 - 3): ");
         scanf("%d", &resEditUser);
         system("cls");
         switch(resEditUser){
@@ -193,3 +219,33 @@ void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id){
 }
 
 /* MENUS */
+
+int MenuAdmin(){
+    int resMenuAdmin = 0;
+    do {
+        printf("\n");
+        printf("1 - Utilizadores\n");
+        printf("2 - Processos\n");
+        printf("3 - Estatísticas\n");
+        printf("0 - Sair\n");
+        printf("Escolha a opção desejada: ");
+        scanf("%d", &resMenuAdmin);
+    }while(resMenuAdmin > 3 || resMenuAdmin < 0);
+    return resMenuAdmin;
+}
+
+int gestaoUtilizador(){
+    int resUtilizador;
+    do {
+        system("cls");
+        printf("GESTÃO DE UTILIZADORES\n");
+        printf("1 - Inserir Utilizador\n");
+        printf("2 - Remover Utilizador\n");
+        printf("3 - Imprimir Utilizador\n");
+        printf("4 - Editar Utilizador\n");
+        printf("0 - Sair\n");
+        printf("Escolha a opção desejada: ");
+        scanf("%d", &resUtilizador);
+    } while (resUtilizador > 4 || resUtilizador < 0);
+    return resUtilizador;
+}

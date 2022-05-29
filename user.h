@@ -22,6 +22,8 @@ typedef struct ElemU {
     struct ElemU *next; //apontador para o próximo nó
 } UElemento;
 
+UTILIZADOR pedeDados(UElemento *ListaU);
+void UserDefault(UElemento *Lista, UTILIZADOR dados);
 int login(UElemento **iniListaU, int *id);
 int InserirFimLista(UElemento **iniListaU, UTILIZADOR novoUtilizador);
 int lerUtilizador(UElemento **iniListaU);
@@ -30,5 +32,8 @@ int escreveFicheiroU(UElemento *iniListaU);
 void imprimeListaU(UElemento *iniListaU);
 void alterarUser(UElemento *iniListaU, UTILIZADOR dados);
 void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id);
+
+int MenuAdmin();
+int gestaoUtilizador();
 
 #endif //UNTITLED4_USER_H
