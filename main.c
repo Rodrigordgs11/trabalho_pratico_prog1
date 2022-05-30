@@ -4,6 +4,7 @@
 #include "processos.h"
 #include <windows.h>
 
+//NAO REMOVE DIREITO PROCESSOS,
 
 //2 QUEUES - 1 URGENTES 1 - NORMAIS - DEPOIS VAI PARA LISTA DUPLAMENTE EM PROCESSOS PROCESSADOS
 
@@ -27,9 +28,9 @@ int main(){
     lerProcessos(&UIniLista,&UFimLista, 1);     //ler ficheiro processo.dat, lista urgente
     lerProcessos(&RIniLista,&RFimLista, 3);     //ler ficheiro processo.dat, lista recusado
 
-    UserDefault(Lista, dados);
+    UserDefault(Lista, dados);      //utilizador default se ficheiro for NULL (se nao existir)
 
-    Login = login(&Lista, &id);
+    Login = login(&Lista, &id);     //faz login e verifica se o nome e a pass é igual a algum id da lista e retorna 1 ou 2 ou -1
     if( Login == -1 ){
         printf("lOGIN FALHADO");
         exit(-5);
@@ -80,10 +81,11 @@ int main(){
                                     InserirInicioListaP(&UIniLista, &UFimLista, dadosP);
                                 }
                             }
-                            escreveFicheiroP(NIniLista, PIniLista, UIniLista, RIniLista);
+                            escreveFicheiroP(NIniLista, UIniLista, RIniLista, PIniLista);
                             break;
                         case 2:
                             //remover
+                            removelem(UIniLista, UFimLista, NIniLista, NFimLista, RIniLista, RFimLista);
                             break;
                         case 3:
                             //imprimir
@@ -101,10 +103,15 @@ int main(){
                             break;
                         case 4:
                             //executar - remover no fim e inserir
+                            executarProcesso(PIniLista,PFimLista,UIniLista,UFimLista,NIniLista,NFimLista,dadosP);
                             break;
+                        case 5:
+                            pesquisarProcesso(NIniLista, RIniLista, UIniLista, PIniLista);
+                            system("pause");
                     }
+                    break;
                 case 3:
-                    switch (menuEstatisticas()) {
+                    switch (menuEstatisticas()){
                         case 1:
                             printf("Número de processos urgentes: %d\n", tamanhoP(UIniLista));
                             printf("Número de processos normais: %d\n", tamanhoP(NIniLista));
@@ -153,7 +160,7 @@ int main(){
                                     InserirInicioListaP(&UIniLista, &UFimLista, dadosP);
                                 }
                             }
-                            escreveFicheiroP(NIniLista, PIniLista, UIniLista, RIniLista);
+                            escreveFicheiroP(NIniLista, UIniLista, RIniLista, PIniLista);
                             break;
                         case 2:
                             //remover
