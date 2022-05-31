@@ -299,22 +299,72 @@ PROCESSO retornaFim(PELEMENTO *fimLista){
     return aux->info;
 }
 
-void executarProcesso(PELEMENTO *iniListaP,PELEMENTO *fimListaP,PELEMENTO *iniListaU,PELEMENTO *fimListaU,PELEMENTO *iniListaN,PELEMENTO *fimListaN,PROCESSO dadosP){
+void eescreveFicheirotxt(PELEMENTO *iniListaP){
+    FILE *fp = fopen("Processados.txt", "a");
+    if (fp == NULL){
+        printf("Erro ao abrir o ficheiro");
+    }
+    for (int i = 0; i < ; ++i) {
+        fprintf("");
+    }
+    fclose(fp);
+}
+
+void executarProcesso(PELEMENTO **iniListaP,PELEMENTO **fimListaP,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP){
     //executar - remover no fim e inserir
-    int res;
+    time_t ramtime;
+    time(&ramtime);
+    int res, lastSize, afterSize;
     printf("Pretende executar um processo? Sim(1) ou Não(0)");
     scanf("%d", &res);
-    if (res == 1 && tamanhoP(iniListaU) > 0){
-        printf("ppp");
-        system("pause");
+    if (res == 1 && tamanhoP(*iniListaU) > 0){
         //obter ultima
-        retornaFim(fimListaU);
-        removeElem(&iniListaU, &fimListaU, iniListaU->info.ProcessID);
-        InserirFimListaP(&iniListaP, &fimListaP, dadosP);
-    }else if(res == 1 && tamanhoP(iniListaN) > 0){
-        retornaFim(fimListaN);
-        removeElem(&iniListaN, &fimListaN, iniListaN->info.ProcessID);
-        InserirFimListaP(&iniListaP, &fimListaP, dadosP);
+        dadosP = retornaFim(*fimListaU);
+        removeElem(iniListaU, fimListaU, dadosP.ProcessID);
+        dadosP.tipoProcesso = 2;
+        dadosP.tempExecutado = *localtime(&ramtime);
+        lastSize = tamanhoP(*iniListaP);
+        InserirFimListaP(iniListaP, fimListaP, dadosP);
+        afterSize = tamanhoP(*iniListaP);
+        if (lastSize < afterSize){
+
+        }
+    }else if(res == 1 && tamanhoP(*iniListaN) > 0){
+        dadosP = retornaFim(*fimListaN);
+        removeElem(iniListaN, fimListaN, dadosP.ProcessID);
+        dadosP.tipoProcesso = 2;
+        dadosP.tempExecutado = *localtime(&ramtime);
+        InserirFimListaP(iniListaP, fimListaP, dadosP);
+    }
+}
+
+void executarProcessoRejeitado(PELEMENTO **iniListaR,PELEMENTO **fimListaR,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP){
+    PELEMENTO *aux = NULL;
+    int res, processorej, restipo;
+    printf("Deseja executar algum processo rejeitado? Sim(1) ou Não(0)");
+    scanf("%d", &res);
+    if(res == 1){
+        printf("Introduza o número de processo rejeitado: ");
+        scanf("%d", &processorej);
+        printf("1");
+        for (aux= *iniListaR; aux!=NULL ;aux = aux->next){
+            printf("2");
+            if (processorej == aux->info.ProcessID){
+                printf("O processo é urgente(1) ou Normal(0)?");
+                scanf("%d", &restipo);
+                if (restipo == 1){
+                    dadosP = retornaFim(*fimListaR);
+                    removeElem(iniListaR, fimListaR,dadosP.ProcessID);
+                    dadosP.tipoProcesso = 1;
+                    InserirFimListaP(iniListaU, fimListaU, dadosP);
+                }else if(restipo == 0){
+                    dadosP = retornaFim(*fimListaR);
+                    removeElem(iniListaR, fimListaR,dadosP.ProcessID);
+                    dadosP.tipoProcesso = 1;
+                    InserirFimListaP(iniListaN, fimListaN, dadosP);
+                }
+            }
+        }
     }
 }
 
@@ -329,16 +379,18 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
             printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
             printf("\n 3) Descrição: %s", aux->info.descricao);
-            printf("\n 4) Data de criação: %s\nData de execução: %s", aux->info.tempCriado, aux->info.tempExecutado);
+            printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d\n", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec,
+                   aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon+1, aux->info.tempExecutado.tm_year+1900, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
         }
     }
     for (aux=iniListaN; aux!=NULL ;aux = aux->next) {
         if (pid == aux->info.ProcessID){
-            printf("\n Processo Encontrado --- [ %d ]", aux->info.ProcessID);
+            printf("\n Processo Encontrado --- [ %d ]b", aux->info.ProcessID);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
             printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
             printf("\n 3) Descrição: %s", aux->info.descricao);
-            printf("\n 4) Data de criação: %s\nData de execução: %s", aux->info.tempCriado, aux->info.tempExecutado);
+            printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon, aux->info.tempCriado.tm_year, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec, aux->info.tempExecutado
+                    ,aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon, aux->info.tempExecutado.tm_year, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
         }
     }
     for (aux=iniListaR; aux!=NULL ;aux = aux->next) {
@@ -347,7 +399,8 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
             printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
             printf("\n 3) Descrição: %s", aux->info.descricao);
-            printf("\n 4) Data de criação: %s\nData de execução: %s", aux->info.tempCriado, aux->info.tempExecutado);
+            printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d\n", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec,
+                   aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon+1, aux->info.tempExecutado.tm_year+1900, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
         }
     }
     for (aux=iniListaP; aux!=NULL ;aux = aux->next) {
@@ -356,7 +409,8 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
             printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
             printf("\n 3) Descrição: %s", aux->info.descricao);
-            printf("\n 4) Data de criação: %s\nData de execução: %s", aux->info.tempCriado, aux->info.tempExecutado);
+            printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d\n", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec,
+                   aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon+1, aux->info.tempExecutado.tm_year+1900, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
         }
     }
 }
@@ -387,11 +441,12 @@ int gestaoProcesso(){
         printf("2 - Remover Processo\n");
         printf("3 - Imprimir os meus Processos\n");
         printf("4 - Executar Processo\n");
-        printf("5 - Pesquisar Processo\n");
+        printf("5 - Executar Processo Rejeitado\n");
+        printf("6 - Pesquisar Processo\n");
         printf("0 - Sair\n");
         printf("Escolha a opcao desejada: ");
         scanf("%d", &resProcesso);
-    } while (resProcesso > 5 || resProcesso < 0);
+    } while (resProcesso > 6 || resProcesso < 0);
     return resProcesso;
 }
 

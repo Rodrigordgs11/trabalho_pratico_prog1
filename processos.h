@@ -35,10 +35,12 @@ int lerProcessos(PELEMENTO **IniLista, PELEMENTO **FimLista, int tipoDeProcesso)
 int escreveFicheiroP(PELEMENTO *iniListaN, PELEMENTO *iniListaU, PELEMENTO *iniListaR, PELEMENTO *iniListaP);
 int tamanhoP(PELEMENTO *iniListaP);
 void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *ListaU);
-void executarProcesso(PELEMENTO *iniListaP,PELEMENTO *fimListaP,PELEMENTO *iniListaU,PELEMENTO *fimListaU,PELEMENTO *iniListaN,PELEMENTO *fimListaN,PROCESSO dadosP);
 int removeElem(PELEMENTO **iniLista, PELEMENTO **fimLista, int num);
 void removelem(PELEMENTO *iniListaU, PELEMENTO *fimListaU,PELEMENTO *iniListaN, PELEMENTO *fimListaN,PELEMENTO *iniListaR, PELEMENTO *fimListaR);
 void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *iniListaU, PELEMENTO *iniListaP);
+void executarProcessoRejeitado(PELEMENTO **iniListaR,PELEMENTO **fimListaR,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP);
+PROCESSO retornaFim(PELEMENTO *fimLista);
+void executarProcesso(PELEMENTO **iniListaP,PELEMENTO **fimListaP,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP);
 
 int gestaoProcesso();
 int menuConvidado();

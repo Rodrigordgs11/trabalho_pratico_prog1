@@ -20,13 +20,13 @@ int main(){
     PROCESSO dadosP;    //estruturas de dados Processos
 
     int id;     //variável id do utilizador
-    int admin, Login, menuA, menuC;
+    int admin, Login, menuA, menuC, res;
 
     lerUtilizador(&Lista);      //ler ficheiro utilizadores.dat
     lerProcessos(&NIniLista,&NFimLista, 0);     //ler ficheiro processo.dat, lista Normal
-    lerProcessos(&PIniLista,&PFimLista, 2);     //ler ficheiro processo.dat, lista processado
     lerProcessos(&UIniLista,&UFimLista, 1);     //ler ficheiro processo.dat, lista urgente
     lerProcessos(&RIniLista,&RFimLista, 3);     //ler ficheiro processo.dat, lista recusado
+    lerProcessos(&PIniLista,&PFimLista, 2);     //ler ficheiro processo.dat, lista processado
 
     UserDefault(Lista, dados);      //utilizador default se ficheiro for NULL (se nao existir)
 
@@ -103,11 +103,19 @@ int main(){
                             break;
                         case 4:
                             //executar - remover no fim e inserir
-                            executarProcesso(PIniLista,PFimLista,UIniLista,UFimLista,NIniLista,NFimLista,dadosP);
+                            executarProcesso(&PIniLista, &PFimLista, &UIniLista, &UFimLista, &NIniLista, &NFimLista, dadosP);
+                            escreveFicheiroP(NIniLista, UIniLista, RIniLista, PIniLista);
+
                             break;
                         case 5:
+                            imprimeElementosDaListaP(RIniLista, id, admin);
+                            executarProcessoRejeitado(&RIniLista, &RFimLista, &UIniLista, &UFimLista, &NIniLista, &NFimLista, dadosP);
+                            escreveFicheiroP(NIniLista, UIniLista, RIniLista, PIniLista);
+                            break;
+                        case 6:
                             pesquisarProcesso(NIniLista, RIniLista, UIniLista, PIniLista);
                             system("pause");
+                            break;
                     }
                     break;
                 case 3:
