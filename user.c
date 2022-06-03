@@ -20,15 +20,6 @@ UTILIZADOR pedeDados(UElemento *ListaU){     //pede dados para a estrutuda de da
     return dados;
 }
 
-void UserDefault(UElemento *Lista, UTILIZADOR dados){
-    FILE *fp = fopen("utilizadores.dat", "rb");     //
-    if (fp == NULL){
-        dados = pedeDados(Lista);
-        dados.id = tamanhoLista(Lista) + 1;
-        InserirFimLista(&Lista, dados);
-        escreveFicheiroU(Lista);
-    }
-}
 
 int verificaLogin(UElemento *iniListaU, int *id, char nome[50], char pp[50]){
     UElemento *utilizadores = NULL;

@@ -122,32 +122,32 @@ void ListarFim (PELEMENTO *fimLista){
     }
 }
 
-void removelem(PELEMENTO *iniListaU, PELEMENTO *fimListaU,PELEMENTO *iniListaN, PELEMENTO *fimListaN,PELEMENTO *iniListaR, PELEMENTO *fimListaR){
+void removelem(PELEMENTO **iniListaU, PELEMENTO **fimListaU,PELEMENTO **iniListaN, PELEMENTO **fimListaN,PELEMENTO **iniListaR, PELEMENTO **fimListaR){
     PELEMENTO *aux= NULL;
     int num, sizeU, sizeN, sizeR, Usize, Nsize, Rsize;
-    printf("p: ");
+    printf("Introduza o número de processo que pretende apagar: ");
     scanf("%d", &num);
-    sizeU = tamanhoP(iniListaU);
-    for (aux = iniListaU; aux!=NULL ;aux = aux->next){
+    sizeU = tamanhoP(*iniListaU);
+    for (aux = *iniListaU; aux!=NULL ;aux = aux->next){
         if(num == aux->info.ProcessID){
-            removeElem(&iniListaU,&fimListaU, aux->info.ProcessID);
+            removeElem(iniListaU,fimListaU, aux->info.ProcessID);
         }
     }
-    Usize = tamanhoP(iniListaU);
-    sizeN = tamanhoP(iniListaN);
-    for (aux = iniListaN; aux!=NULL ;aux = aux->next){
+    Usize = tamanhoP(*iniListaU);
+    sizeN = tamanhoP(*iniListaN);
+    for (aux = *iniListaN; aux!=NULL ;aux = aux->next){
         if(num == aux->info.ProcessID){
-            removeElem(&iniListaN,&fimListaN, aux->info.ProcessID);
+            removeElem(iniListaN,fimListaN, aux->info.ProcessID);
         }
     }
-    Nsize = tamanhoP(iniListaN);
-    sizeR = tamanhoP(iniListaR);
-    for (aux = iniListaR; aux!=NULL ;aux = aux->next){
+    Nsize = tamanhoP(*iniListaN);
+    sizeR = tamanhoP(*iniListaR);
+    for (aux = *iniListaR; aux!=NULL ;aux = aux->next){
         if(num == aux->info.ProcessID){
-            removeElem(&iniListaR,&fimListaR, aux->info.ProcessID);
+            removeElem(iniListaR,fimListaR, aux->info.ProcessID);
         }
     }
-    Rsize = tamanhoP(iniListaR);
+    Rsize = tamanhoP(*iniListaR);
 
     if(sizeR != Rsize || sizeU != Usize || sizeN != Nsize){
         printf("Remoção com sucesso!!\n");
@@ -206,119 +206,38 @@ void relatorioPorNome(PROCESSO dados){
     fclose(fp);
 }
 
-/*
-    void insertionSort(int val[], int tam, PELEMENTO *iniListaP, UTILIZADOR *dados) {
-    FILE *fp = NULL;
-    fp = fopen("relatorioProcessos.txt", "w");
-    if (fp == NULL){
-        printf("Erro ao abrir o ficheiro");
-    }
-    PELEMENTO *aux = iniListaP;
-    //passar de lista para array
-    while (aux!=NULL){
-        for (int i = 0; i < qtd; ++i) {
-
-        }
-        aux = aux->next;
-    }
-    // ordenado
-    int i=0, j=0, aux=0;
-    for(i=1;i<tam;i++) {
-        aux = val[i];
-        j = i - 1;
-        while(j >= 0 && val[j]>aux) {
-            val[j+1] = val[j];
-            j--;
-        }
-        val[j+1] = aux;
-    }
-    // quando a string do array ordenado for igual á da lista fprintf
-    PELEMENTO *aux2 = iniListaP;
-    while (aux2!=NULL){
-        for (int i = 0; i < qtd; ++i){
-            if(nomes[i] == aux2->info.nomeUtilizador){
-                fprintf(fp, "Pid: %d, Nome: %s, Descrição: %s", aux2->info.ProcessID, aux2->info.nomeUtilizador, aux2->info.descricao);
-            }
-        }
-        aux2 = aux2->next;
-    }
-    fclose(fp);
-}
-
- */
-
-void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *ListaU){
-    UElemento *auxU = NULL;
-    PELEMENTO *aux = NULL;
-    //quando o id do user for igual ao dono do processo printa
-    char nome[50];
-    int flag, id;
-    system("cls");
-    imprimeListaU(ListaU);
-    printf("Introduza o nome do utilizador que prentende listar: ");
-    scanf("%s", &nome);
-    if(strlen(nome) < 2){
-        do{
-            printf("\nPor favor insira pelo menos 2 caracteres para procurar pelo nome: ");
-            scanf("%s", &nome);
-            fflush(stdin);
-        }while (strlen(nome) < 2);
-    }
-    for (auxU = ListaU; auxU!=NULL ;auxU = auxU->next){
-        if(strstr(nome, auxU->info.nomeUtilizador)){
-            flag = 1;
-        }
-    }
-    if (flag == 1){
-        printf("Utilizadores que contem '%s'\n", nome);
-        for (auxU = ListaU; auxU!=NULL ;auxU = auxU->next){
-            if(strstr(nome, auxU->info.nomeUtilizador)){
-                printf("Id: %d, Nome: %s, Tipo: %d\n", auxU->info.id, auxU->info.nomeUtilizador, auxU->info.tipoDeUtilizador);
-            }
-        }
-        printf("Qual o Utilizador que quer escolher?: ");
-        scanf("%d", &id);
-        printf("** Lista urgente **\n");
-        for (aux = iniListaU; aux!=NULL ;aux = aux->next){
-            if(id == aux->info.dono){
-                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
-            }
-        }
-        printf("** Lista Normal **\n");
-        for (aux = iniListaN; aux!=NULL ;aux = aux->next){
-            if(id == aux->info.dono){
-                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
-            }
-        }
-
-    }
-}
-
 PROCESSO retornaFim(PELEMENTO *fimLista){
     PELEMENTO *aux = fimLista;
-    return aux->info;
+    return fimLista->info;
 }
 
-void eescreveFicheirotxt(PELEMENTO *iniListaP){
+PROCESSO retornaInicio(PELEMENTO *iniLista){
+    PELEMENTO *aux = iniLista;
+    if (aux != NULL){
+        return aux->info;
+    }
+
+}
+
+void escreveFicheirotxt(PROCESSO dadosP){
     FILE *fp = fopen("Processados.txt", "a");
     if (fp == NULL){
         printf("Erro ao abrir o ficheiro");
     }
-    for (int i = 0; i < ; ++i) {
-        fprintf("");
-    }
+    fprintf(fp,"Pid: %d, Nome: %s, Descrição: %s, Data de criação: %d/%d/%d - %d:%d:%d, Data de execução: %d/%d/%d - %d:%d:%d\n",dadosP.ProcessID, dadosP.nomeUtilizador, dadosP.descricao, dadosP.tempCriado.tm_mday, dadosP.tempCriado.tm_mon+1, dadosP.tempCriado.tm_year+1900, dadosP.tempCriado.tm_hour, dadosP.tempCriado.tm_min, dadosP.tempCriado.tm_sec,
+            dadosP.tempExecutado.tm_mday, dadosP.tempExecutado.tm_mon+1, dadosP.tempExecutado.tm_year+1900, dadosP.tempExecutado.tm_hour, dadosP.tempExecutado.tm_min, dadosP.tempExecutado.tm_sec);
     fclose(fp);
 }
 
-void executarProcesso(PELEMENTO **iniListaP,PELEMENTO **fimListaP,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP){
+void executarProcesso(Estatisticas *estatisticas,PELEMENTO **iniListaP,PELEMENTO **fimListaP,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP){
     //executar - remover no fim e inserir
+    lerEstatisticas(estatisticas);
     time_t ramtime;
     time(&ramtime);
     int res, lastSize, afterSize;
     printf("Pretende executar um processo? Sim(1) ou Não(0)");
     scanf("%d", &res);
     if (res == 1 && tamanhoP(*iniListaU) > 0){
-        //obter ultima
         dadosP = retornaFim(*fimListaU);
         removeElem(iniListaU, fimListaU, dadosP.ProcessID);
         dadosP.tipoProcesso = 2;
@@ -327,14 +246,23 @@ void executarProcesso(PELEMENTO **iniListaP,PELEMENTO **fimListaP,PELEMENTO **in
         InserirFimListaP(iniListaP, fimListaP, dadosP);
         afterSize = tamanhoP(*iniListaP);
         if (lastSize < afterSize){
-
+            escreveFicheirotxt(dadosP);
+            estatisticas->numerosProcessosProcessadosU++;
+            gravaEstatisticas(estatisticas);
         }
     }else if(res == 1 && tamanhoP(*iniListaN) > 0){
         dadosP = retornaFim(*fimListaN);
         removeElem(iniListaN, fimListaN, dadosP.ProcessID);
         dadosP.tipoProcesso = 2;
         dadosP.tempExecutado = *localtime(&ramtime);
+        lastSize = tamanhoP(*iniListaP);
         InserirFimListaP(iniListaP, fimListaP, dadosP);
+        afterSize = tamanhoP(*iniListaP);
+        if (lastSize < afterSize){
+            escreveFicheirotxt(dadosP);
+            estatisticas->numerosProcessosProcessadosN++;
+            gravaEstatisticas(estatisticas);
+        }
     }
 }
 
@@ -346,9 +274,7 @@ void executarProcessoRejeitado(PELEMENTO **iniListaR,PELEMENTO **fimListaR,PELEM
     if(res == 1){
         printf("Introduza o número de processo rejeitado: ");
         scanf("%d", &processorej);
-        printf("1");
         for (aux= *iniListaR; aux!=NULL ;aux = aux->next){
-            printf("2");
             if (processorej == aux->info.ProcessID){
                 printf("O processo é urgente(1) ou Normal(0)?");
                 scanf("%d", &restipo);
@@ -415,6 +341,105 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
     }
 }
 
+void rankingProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN){
+    PROCESSO dadosU, dadosN;
+    PELEMENTO *aux = NULL;
+    int varIncrementada = 0;
+    dadosU = retornaFim(iniListaU);
+    dadosN = retornaFim(iniListaN);
+
+    if(tamanhoP(iniListaU) == 0){
+        varIncrementada = dadosN.ProcessID;
+    }else if(tamanhoP(iniListaN)){
+        varIncrementada = dadosU.ProcessID;
+    }else if(tamanhoP(iniListaU) && tamanhoP(iniListaN)){
+        printf("Não existe nenhum processo");
+        return ;
+    }
+    if (dadosU.ProcessID > dadosN.ProcessID) varIncrementada = dadosN.ProcessID;
+    else varIncrementada = dadosU.ProcessID;
+
+    for (aux = iniListaU; aux != NULL;aux = aux->next){
+        if (varIncrementada == aux->info.ProcessID){
+            printf("%d - %s - Data de criação: %d/%d/%d - %d:%d:%d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec);
+            varIncrementada++;
+        }
+    }
+    for (aux = iniListaN; aux != NULL;aux = aux->next){
+        if (varIncrementada == aux->info.ProcessID){
+            printf("%d - %s - Data de criação: %d/%d/%d - %d:%d:%d, Data de execução: %d/%d/%d - %d:%d:%d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec);
+            varIncrementada++;
+        }
+    }
+}
+
+void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *ListaU){
+    UElemento *auxU = NULL;
+    PELEMENTO *aux = NULL;
+    //quando o id do user for igual ao dono do processo printa
+    char nome[50];
+    int flag, id;
+    system("cls");
+    imprimeListaU(ListaU);
+    printf("Introduza o nome do utilizador que prentende listar: ");
+    scanf("%s", &nome);
+    if(strlen(nome) < 2){
+        do{
+            printf("\nPor favor insira pelo menos 2 caracteres para procurar pelo nome: ");
+            scanf("%s", &nome);
+            fflush(stdin);
+        }while (strlen(nome) < 2);
+    }
+    for (auxU = ListaU; auxU!=NULL ;auxU = auxU->next){
+        if(strstr(nome, auxU->info.nomeUtilizador)){
+            flag = 1;
+        }
+    }
+    if (flag == 1){
+        printf("Utilizadores que contem '%s'\n", nome);
+        for (auxU = ListaU; auxU!=NULL ;auxU = auxU->next){
+            if(strstr(nome, auxU->info.nomeUtilizador)){
+                printf("Id: %d, Nome: %s, Tipo: %d\n", auxU->info.id, auxU->info.nomeUtilizador, auxU->info.tipoDeUtilizador);
+            }
+        }
+        printf("Qual o Utilizador que quer escolher?: ");
+        scanf("%d", &id);
+        printf("** Lista urgente **\n");
+        for (aux = iniListaU; aux!=NULL ;aux = aux->next){
+            if(id == aux->info.dono){
+                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
+            }
+        }
+        printf("** Lista Normal **\n");
+        for (aux = iniListaN; aux!=NULL ;aux = aux->next){
+            if(id == aux->info.dono){
+                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
+            }
+        }
+
+    }
+}
+
+//menus
+
+int menuEstatisticas(){
+    int resmenuEstatisticas;
+    do{
+        system("cls");
+        printf("** Estatísticas **\n");
+        printf("1 - Número de processos processados de cada lista\n");
+        printf("2 - Número de processos em espera em cada uma das lista\n");
+        printf("3 - Número total de processos rejeitados\n");
+        printf("4 - Processo que mais tempo e menos tempo demorou a ser executado\n");
+        printf("5 - Tempo médio de espera dos processos de cada uma das listas de espera\n");
+        printf("6 - Número atual de processos normais e urgentes de um determinado utilizador\n");
+        printf("0 - Sair\n");
+        printf("Escolha a opcao desejada: ");
+        scanf("%d", &resmenuEstatisticas);
+    }while (resmenuEstatisticas > 6 || resmenuEstatisticas < 0);
+    return resmenuEstatisticas;
+}
+
 /* MENUS */
 
 int menuConvidado(){
@@ -436,34 +461,17 @@ int gestaoProcesso(){
     int resProcesso;
     do {
         system("cls");
-        printf("GESTÃO DE PROCESSOS\n");
+        printf("** GESTÃO DE PROCESSOS **\n");
         printf("1 - Inserir Processo\n");
         printf("2 - Remover Processo\n");
         printf("3 - Imprimir os meus Processos\n");
         printf("4 - Executar Processo\n");
         printf("5 - Executar Processo Rejeitado\n");
         printf("6 - Pesquisar Processo\n");
+        printf("7 - Ranking de processos por tempo de espera\n");
         printf("0 - Sair\n");
         printf("Escolha a opcao desejada: ");
         scanf("%d", &resProcesso);
-    } while (resProcesso > 6 || resProcesso < 0);
+    } while (resProcesso > 7 || resProcesso < 0);
     return resProcesso;
-}
-
-int menuEstatisticas(){
-    int resmenuEstatisticas;
-    do{
-        system("cls");
-        printf("** Estatísticas **\n");
-        printf("1 - Número de processos processados de cada lista\n");
-        printf("2 - Número de processos em espera em cada uma das lista\n");
-        printf("3 - Número total de processos rejeitados\n");
-        printf("4 - Processo que mais tempo e menos tempo demorou a ser executado\n");
-        printf("5 - Tempo médio de espera dos processos de cada uma das listas de espera\n");
-        printf("6 - Número atual de processos normais e urgentes de um determinado utilizador\n");
-        printf("0 - Sair\n");
-        printf("Escolha a opcao desejada: ");
-        scanf("%d", &resmenuEstatisticas);
-    }while (resmenuEstatisticas > 6 || resmenuEstatisticas < 0);
-    return resmenuEstatisticas;
 }

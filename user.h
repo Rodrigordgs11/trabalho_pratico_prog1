@@ -23,7 +23,6 @@ typedef struct ElemU {
 } UElemento;
 
 UTILIZADOR pedeDados(UElemento *ListaU);
-void UserDefault(UElemento *Lista, UTILIZADOR dados);
 int login(UElemento **iniListaU, int *id);
 int InserirFimLista(UElemento **iniListaU, UTILIZADOR novoUtilizador);
 int lerUtilizador(UElemento **iniListaU);

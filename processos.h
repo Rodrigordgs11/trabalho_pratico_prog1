@@ -7,6 +7,8 @@
 #include <time.h>
 #include <string.h>
 #include "user.h"
+#include "estatisticas.h"
+
 #ifndef TRABALHO_PRATICO_PROG1_PROCESSOS_H
 #define TRABALHO_PRATICO_PROG1_PROCESSOS_H
 
@@ -36,11 +38,14 @@ int escreveFicheiroP(PELEMENTO *iniListaN, PELEMENTO *iniListaU, PELEMENTO *iniL
 int tamanhoP(PELEMENTO *iniListaP);
 void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *ListaU);
 int removeElem(PELEMENTO **iniLista, PELEMENTO **fimLista, int num);
-void removelem(PELEMENTO *iniListaU, PELEMENTO *fimListaU,PELEMENTO *iniListaN, PELEMENTO *fimListaN,PELEMENTO *iniListaR, PELEMENTO *fimListaR);
+void removelem(PELEMENTO **iniListaU, PELEMENTO **fimListaU,PELEMENTO **iniListaN, PELEMENTO **fimListaN,PELEMENTO **iniListaR, PELEMENTO **fimListaR);
 void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *iniListaU, PELEMENTO *iniListaP);
 void executarProcessoRejeitado(PELEMENTO **iniListaR,PELEMENTO **fimListaR,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP);
 PROCESSO retornaFim(PELEMENTO *fimLista);
-void executarProcesso(PELEMENTO **iniListaP,PELEMENTO **fimListaP,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP);
+void executarProcesso(Estatisticas *estatisticas,PELEMENTO **iniListaP,PELEMENTO **fimListaP,PELEMENTO **iniListaU,PELEMENTO **fimListaU,PELEMENTO **iniListaN,PELEMENTO **fimListaN,PROCESSO dadosP);
+void escreveFicheirotxt(PROCESSO dadosP);
+void rankingProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN);
+PROCESSO retornaInicio(PELEMENTO *iniLista);
 
 int gestaoProcesso();
 int menuConvidado();
