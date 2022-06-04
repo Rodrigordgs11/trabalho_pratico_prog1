@@ -23,6 +23,7 @@ typedef struct ElemU {
 } UElemento;
 
 UTILIZADOR pedeDados(UElemento *ListaU);
+void UserDefault(UElemento *Lista, UTILIZADOR dados);
 int login(UElemento **iniListaU, int *id);
 int InserirFimLista(UElemento **iniListaU, UTILIZADOR novoUtilizador);
 int lerUtilizador(UElemento **iniListaU);
@@ -34,5 +35,6 @@ void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id);
 
 int MenuAdmin();
 int gestaoUtilizador();
+int gestaoProcessoU();
 
 #endif //UNTITLED4_USER_H

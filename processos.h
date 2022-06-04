@@ -46,9 +46,8 @@ void executarProcesso(Estatisticas *estatisticas,PELEMENTO **iniListaP,PELEMENTO
 void escreveFicheirotxt(PROCESSO dadosP);
 void rankingProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN);
 PROCESSO retornaInicio(PELEMENTO *iniLista);
-
-int gestaoProcesso();
-int menuConvidado();
-int menuEstatisticas();
+void tempoMedioDeEspera(PELEMENTO *iniLista);
+void processoMaisMenosTempo(PELEMENTO *iniLista, PELEMENTO *fimLista);
+int ordenaNome(UElemento *user);
 
 #endif //TRABALHO_PRATICO_PROG1_PROCESSOS_H

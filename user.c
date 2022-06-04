@@ -20,7 +20,6 @@ UTILIZADOR pedeDados(UElemento *ListaU){     //pede dados para a estrutuda de da
     return dados;
 }
 
-
 int verificaLogin(UElemento *iniListaU, int *id, char nome[50], char pp[50]){
     UElemento *utilizadores = NULL;
     for(utilizadores = iniListaU; utilizadores != NULL; utilizadores=utilizadores->next){
@@ -128,7 +127,6 @@ void imprimeListaU(UElemento *iniListaU) {
 }
 
 //admin
-
 void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
     UElemento *aux=NULL;
     int id, flag = 0, resEditUser;
@@ -146,26 +144,34 @@ void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
             printf("\n 3) Tipo de utilizador: %d", aux->info.tipoDeUtilizador);
         }
     }
-    if (flag == 1 ){
-        printf("\nEscolha o campo a alterar (1 - 3): ");
-        scanf("%d", &resEditUser);
-        system("cls");
-        switch(resEditUser){
-            case 1 :
-                printf("\nNome: ");
-                scanf("%s", &dados.nomeUtilizador);
+
+    if (flag == 1 ) {
+        for (aux = iniListaU; aux != NULL; aux = aux->next) {
+            if (id == aux->info.id) {
+                printf("\nEscolha o campo a alterar (1 - 3): ");
+                scanf("%d", &resEditUser);
                 system("cls");
-                break;
-            case 2 :
-                printf("\nPalavra Passe: ");
-                scanf("%s", dados.pp);
-                system("cls");
-                break;
-            case 3:
-                printf("\nTipo de Utilizador - Administrador(1) ou Convidado(0): ");
-                scanf("%d", dados.tipoDeUtilizador);
-                system("cls");
-                break;
+                switch (resEditUser) {
+                    case 1 :
+                        printf("\nNome: ");
+                        scanf("%s", aux->info.nomeUtilizador);
+                        escreveFicheiroU(iniListaU);
+                        system("cls");
+                        break;
+                    case 2 :
+                        printf("\nPalavra Passe: ");
+                        scanf("%s", aux->info.pp);
+                        escreveFicheiroU(iniListaU);
+                        system("cls");
+                        break;
+                    case 3:
+                        printf("\nTipo de Utilizador - Administrador(1) ou Convidado(0): ");
+                        scanf("%d", aux->info.tipoDeUtilizador);
+                        escreveFicheiroU(iniListaU);
+                        system("cls");
+                        break;
+                }
+            }
         }
     }else{
         printf("\n -- Utilizador Não Encontrado --");}
@@ -175,7 +181,7 @@ void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
 void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id){
     int flag, resEditUser;
     UElemento *aux = NULL;
-    for (aux=iniListaU; aux!=NULL ;aux = aux->next) {
+    for (aux=iniListaU; aux!=NULL ;aux = aux->next){
         if (id == aux->info.id){
             printf("\n Utilizador --- [ %d ]", aux->info.id);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
@@ -186,57 +192,24 @@ void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id){
     printf("\nPretende alterar dados? Sim(1) ou Não(0)");
     scanf("%d", &flag);
     if (flag == 1){
-        printf("\nEscolha o campo a alterar (1 - 8): ");
-        scanf("%d", &resEditUser);
-        system("cls");
-        switch(resEditUser){
-            case 1 :
-                printf("\nNome: ");
-                scanf("%s", &dados.nomeUtilizador);
+        for (aux=iniListaU; aux!=NULL ;aux = aux->next){
+            if (id == aux->info.id) {
+                printf("\nEscolha o campo a alterar (1 - 2): ");
+                scanf("%d", &resEditUser);
                 system("cls");
-                break;
-            case 2 :
-                printf("\nPalavra Passe: ");
-                scanf("%s", &dados.pp);
-                system("cls");
-                break;
-            case 3:
-                printf("\nTipo de Utilizador - Administrador(1) ou Convidado(0): ");
-                scanf("%d", &dados.tipoDeUtilizador);
-                system("cls");
-                break;
+                switch (resEditUser) {
+                    case 1 :
+                        printf("\nNome: ");
+                        scanf("%s", &aux->info.nomeUtilizador);
+                        system("cls");
+                        break;
+                    case 2 :
+                        printf("\nPalavra Passe: ");
+                        scanf("%s", &aux->info.pp);
+                        system("cls");
+                        break;
+                }
+            }
         }
     }
-}
-
-/* MENUS */
-
-int MenuAdmin(){
-    int resMenuAdmin = 0;
-    do {
-        printf("\n");
-        printf("1 - Utilizadores\n");
-        printf("2 - Processos\n");
-        printf("3 - Estatísticas\n");
-        printf("0 - Sair\n");
-        printf("Escolha a opção desejada: ");
-        scanf("%d", &resMenuAdmin);
-    }while(resMenuAdmin > 3 || resMenuAdmin < 0);
-    return resMenuAdmin;
-}
-
-int gestaoUtilizador(){
-    int resUtilizador;
-    do {
-        system("cls");
-        printf("GESTÃO DE UTILIZADORES\n");
-        printf("1 - Inserir Utilizador\n");
-        printf("2 - Remover Utilizador\n");
-        printf("3 - Imprimir Utilizador\n");
-        printf("4 - Editar Utilizador\n");
-        printf("0 - Sair\n");
-        printf("Escolha a opção desejada: ");
-        scanf("%d", &resUtilizador);
-    } while (resUtilizador > 4 || resUtilizador < 0);
-    return resUtilizador;
 }

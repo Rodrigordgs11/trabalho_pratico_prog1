@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "user.h"
 #include "processos.h"
+#include "menus.h"
 #include <windows.h>
 
 
@@ -130,6 +131,9 @@ int main(){
                             rankingProcessos(UIniLista, NIniLista);
                             system("pause");
                             break;
+                        case 8:
+                            ordenaNome(Lista);
+                            break;
                     }
                     break;
                 case 3:
@@ -148,28 +152,34 @@ int main(){
                             printf("Número de processos rejeitados: %d", estatisticas.numeroTotalRejeitados);
                             system("pause");
                             break;
+                        case 4:
+                            processoMaisMenosTempo(PIniLista, PFimLista);
+                            system("pause");
+                            break;
+                        case 5:
+                            tempoMedioDeEspera(UIniLista);
+                            system("pause");
+                            break;
                         case 6:
                             numAtualProcessos(UIniLista, NIniLista, Lista);
                             system("pause");
                             break;
-
                     }
                     break;
                 case 0:
                     system("cls");
                     break;
             }
-        } while (menuA!=0);
-    }
-    else if( Login == 2 ){
+        }while (menuA!=0);
+    }else if( Login == 2 ){
         printf("Convidado");
         //Processos
-        do {
+        do{
             admin = 0;
             menuC = menuConvidado();
-            switch (menuC) {
+            switch (menuC){
                 case 1:
-                    switch (gestaoProcesso(admin)) {
+                    switch (gestaoProcessoU()){
                         case 1:
                             //inserir
                             dadosP = pedeDadosP(id,NIniLista,UIniLista, RIniLista,PIniLista);
@@ -191,9 +201,6 @@ int main(){
                             escreveFicheiroP(NIniLista, UIniLista, RIniLista, PIniLista);
                             break;
                         case 2:
-                            //remover
-                            break;
-                        case 3:
                             //imprimir
                             system("cls");
                             printf("** PROCESSOS INSERIDOS **\n");
@@ -212,8 +219,7 @@ int main(){
                 case 2:
                     //perfil
                     perfilUser(Lista, dados, id);
-                    break;
-                case 3:
+                    escreveFicheiroU(Lista);
                     break;
                 case 0:
                     system("cls");
