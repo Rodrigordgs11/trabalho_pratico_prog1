@@ -22,4 +22,3 @@ void imprimeProcessosJaProcessados(Estatisticas estatisticas){
     printf("Número de processos processados normais: %d\n", estatisticas.numerosProcessosProcessadosN);
     printf("Número de processos processados urgentes: %d\n", estatisticas.numerosProcessosProcessadosU);
 }
-

@@ -6,8 +6,6 @@
 
 /* LISTAS */
 
-//DUPLAMENTE LIGADAS
-
 PROCESSO pedeDadosP(int id, PELEMENTO *iniListaN, PELEMENTO *iniListaU, PELEMENTO *iniListaR, PELEMENTO *iniListaP){        //pede dados para a estrutuda de dados do Processo
     time_t rawtime;
     time( &rawtime );
@@ -83,7 +81,6 @@ int InserirInicioListaP (PELEMENTO **iniLista, PELEMENTO **fimLista,PROCESSO new
     return 0;
 }
 
-
 // lista processos processados
 int InserirFimListaP (PELEMENTO **iniLista, PELEMENTO **fimLista, PROCESSO newInfo){
     PELEMENTO *novo=NULL;
@@ -158,7 +155,6 @@ int removeElem(PELEMENTO **iniLista, PELEMENTO **fimLista, int num) {
     else {aux->next->before = aux->before;}
     free(aux); return 0;
 }
-
 
 int tamanhoP(PELEMENTO *iniListaP){
     PELEMENTO *aux1=NULL;
@@ -276,7 +272,7 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
         if (pid == aux->info.ProcessID){
             printf("\n Processo Encontrado --- [ %d ]", aux->info.ProcessID);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
-            printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
+            printf("\n 2) Tipo de processo: Processo urgente");
             printf("\n 3) Descrição: %s", aux->info.descricao);
             printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d\n", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec,
                    aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon+1, aux->info.tempExecutado.tm_year+1900, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
@@ -286,7 +282,7 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
         if (pid == aux->info.ProcessID){
             printf("\n Processo Encontrado --- [ %d ]b", aux->info.ProcessID);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
-            printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
+            printf("\n 2) Tipo de processo: Processo Normal");
             printf("\n 3) Descrição: %s", aux->info.descricao);
             printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon, aux->info.tempCriado.tm_year, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec, aux->info.tempExecutado
                     ,aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon, aux->info.tempExecutado.tm_year, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
@@ -296,7 +292,7 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
         if (pid == aux->info.ProcessID){
             printf("\n Processo Encontrado --- [ %d ]", aux->info.ProcessID);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
-            printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
+            printf("\n 2) Tipo de processo: Processo Recusado");
             printf("\n 3) Descrição: %s", aux->info.descricao);
             printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d\n", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec,
                    aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon+1, aux->info.tempExecutado.tm_year+1900, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
@@ -306,7 +302,7 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
         if (pid == aux->info.ProcessID){
             printf("\n Processo Encontrado --- [ %d ]", aux->info.ProcessID);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
-            printf("\n 2) Tipo de processo: %d", aux->info.tipoProcesso);
+            printf("\n 2) Tipo de processo: Processo Processado");
             printf("\n 3) Descrição: %s", aux->info.descricao);
             printf("\n 4) Data de criação: %d/%d/%d - %d:%d:%d\nData de execução: %d/%d/%d - %d:%d:%d\n", aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec,
                    aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon+1, aux->info.tempExecutado.tm_year+1900, aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min, aux->info.tempExecutado.tm_sec);
@@ -317,7 +313,7 @@ void pesquisarProcesso(PELEMENTO *iniListaN, PELEMENTO *iniListaR, PELEMENTO *in
 void rankingProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN){
     PROCESSO dadosU, dadosN;
     PELEMENTO *aux = NULL;
-    int varIncrementada;
+    int varIncrementada, tamanho;
     dadosU = retornaFim(iniListaU);
     dadosN = retornaFim(iniListaN);
 
@@ -331,17 +327,19 @@ void rankingProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN){
     }
     if (dadosU.ProcessID > dadosN.ProcessID) varIncrementada = dadosN.ProcessID;
     else varIncrementada = dadosU.ProcessID;
-
-    for (aux = iniListaU; aux != NULL;aux = aux->next){
-        if (varIncrementada == aux->info.ProcessID){
-            printf("%d - %s - Data de criação: %d/%d/%d - %d:%d:%d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec);
-            varIncrementada++;
+    tamanho = tamanhoP(iniListaN) + tamanhoP(iniListaU);
+    for (int i = 0; i < tamanho; ++i) {
+        for (aux = iniListaU; aux != NULL;aux = aux->next){
+            if (varIncrementada == aux->info.ProcessID){
+                printf("%d - %s - Data de criação: %d/%d/%d - %d:%d:%d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec);
+                varIncrementada++;
+            }
         }
-    }
-    for (aux = iniListaN; aux != NULL;aux = aux->next){
-        if (varIncrementada == aux->info.ProcessID){
-            printf("%d - %s - Data de criação: %d/%d/%d - %d:%d:%d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec);
-            varIncrementada++;
+        for (aux = iniListaN; aux != NULL;aux = aux->next){
+            if (varIncrementada == aux->info.ProcessID){
+                printf("%d - %s - Data de criação: %d/%d/%d - %d:%d:%d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon+1, aux->info.tempCriado.tm_year+1900, aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min, aux->info.tempCriado.tm_sec);
+                varIncrementada++;
+            }
         }
     }
 }
@@ -380,13 +378,13 @@ void numAtualProcessos(PELEMENTO *iniListaU, PELEMENTO *iniListaN, UElemento *Li
         printf("** Lista urgente **\n");
         for (aux = iniListaU; aux!=NULL ;aux = aux->next){
             if(id == aux->info.dono){
-                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
+                printf("Id: %d, Nome: %s, Tipo de processo: Urgente\n", aux->info.ProcessID, aux->info.nomeUtilizador);
             }
         }
         printf("** Lista Normal **\n");
         for (aux = iniListaN; aux!=NULL ;aux = aux->next){
             if(id == aux->info.dono){
-                printf("Id: %d, Nome: %s, Tipo: %d\n", aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.tipoProcesso);
+                printf("Id: %d, Nome: %s, Tipo de processo: Normal\n", aux->info.ProcessID, aux->info.nomeUtilizador);
             }
         }
 
@@ -399,14 +397,16 @@ void tempoMedioDeEspera(PELEMENTO *iniLista){
     time(&rawtime);
     struct tm tempoReal;
     tempoReal = *localtime(&rawtime);
-    int dia, mes, ano, hora, minutos, segundos;
+    int dias, meses, anos, horas, minutos, segundos;
     for(aux = iniLista; aux != NULL; aux=aux->next){
         segundos = tempoReal.tm_sec - aux->info.tempCriado.tm_sec;
-        dia = tempoReal.tm_mday - aux->info.tempCriado.tm_mday;
-        mes =  tempoReal.tm_mon - aux->info.tempCriado.tm_mon;
-        ano = (tempoReal.tm_year + 1900) - (aux->info.tempCriado.tm_year + 1900);
-        hora = tempoReal.tm_hour - aux->info.tempCriado.tm_hour;
         minutos = tempoReal.tm_min - aux->info.tempCriado.tm_min;
+        horas = tempoReal.tm_hour - aux->info.tempCriado.tm_hour;
+        dias = tempoReal.tm_mday - aux->info.tempCriado.tm_mday;
+        meses =  tempoReal.tm_mon - aux->info.tempCriado.tm_mon;
+        anos = (tempoReal.tm_year + 1900) - (aux->info.tempCriado.tm_year + 1900);
+
+
     }
     //-1 = 60-10= 50 // -1= 60 + 10 = 70  //
     if(minutos > 0 && segundos <0) {
@@ -414,17 +414,17 @@ void tempoMedioDeEspera(PELEMENTO *iniLista){
         minutos = minutos - abs(segundos);
         minutos = minutos / 60;
     }if(minutos < 0 && segundos < 0) {
-        minutos = abs(hora) * 60;
+        minutos = abs(horas) * 60;
         minutos = minutos - abs(segundos);
-    }if(hora < 0 && minutos < 0){
-        hora = abs(hora)*60;
-        hora = hora - abs(minutos);
-    }if(hora > 0 && minutos <0){
-        hora = hora*60;
-        hora = hora - abs(minutos);
-        hora = hora/60;
+    }if(horas < 0 && minutos < 0){
+        horas = abs(horas)*60;
+        horas = horas - abs(minutos);
+    }if(horas > 0 && minutos <0){
+        horas = horas*60;
+        horas = horas - abs(minutos);
+        horas = horas/60;
     }
-    printf("%d anos, %d meses, %d dias, %d horas, %d minutos", ano/ tamanhoP(iniLista), mes/tamanhoP(iniLista), dia/tamanhoP(iniLista), hora/tamanhoP(iniLista), minutos/tamanhoP(iniLista));
+    printf("%d anos, %d meses, %d dias, %d horas, %d minutos", anos/ tamanhoP(iniLista), meses/tamanhoP(iniLista), dias/tamanhoP(iniLista), horas/tamanhoP(iniLista), minutos/tamanhoP(iniLista));
 }
 
 void processoMaisMenosTempo(PELEMENTO *iniLista, PELEMENTO *fimLista){
@@ -462,17 +462,18 @@ char* retornaNome(UElemento *iniLista, int pid){
     }
 }
 
-int ordenaNome(UElemento *user){
-    PELEMENTO *iniLista = NULL;PELEMENTO *fimLista = NULL;
+int ordenaNome(UElemento *user) {
+    PELEMENTO *iniLista = NULL;
+    PELEMENTO *fimLista = NULL;
     PELEMENTO *aux;
     PROCESSO tempP;
     char primeiroNome[50];
     char segundoNome[50];
 
-    lerProcessos(&iniLista,&fimLista, 0);     //ler ficheiro processo.dat, lista Normal
-    lerProcessos(&iniLista,&fimLista, 1);     //ler ficheiro processo.dat, lista urgente
-    lerProcessos(&iniLista,&fimLista, 3);     //ler ficheiro processo.dat, lista recusado
-    lerProcessos(&iniLista,&fimLista, 2);     //ler ficheiro processo.dat, lista processado
+    lerProcessos(&iniLista, &fimLista, 0);     //ler ficheiro processo.dat, lista Normal
+    lerProcessos(&iniLista, &fimLista, 1);     //ler ficheiro processo.dat, lista urgente
+    lerProcessos(&iniLista, &fimLista, 3);     //ler ficheiro processo.dat, lista recusado
+    lerProcessos(&iniLista, &fimLista, 2);     //ler ficheiro processo.dat, lista processado
 
     for (int i = 0; i < tamanhoP(iniLista); i++) {
         for (aux = iniLista; aux->next != NULL; aux = aux->next) {
@@ -486,14 +487,17 @@ int ordenaNome(UElemento *user){
         }
     }
 
-    for (aux = iniLista; aux != NULL; aux = aux->next){
+    for (aux = iniLista; aux != NULL; aux = aux->next) {
         FILE *fp = NULL;
-        fp=fopen("dadosOredenadosNome.txt", "w");
-        if(fp==NULL) return -1;
-        fprintf(fp,"Pid: %d, Nome: %s, Descrição: %s, Dono: %s, Data de criação: %d/%d/%d - %d:%d, Data de execução: %d/%d/%d - %d:%d\n",
+        fp = fopen("relatorioNome.txt", "w");
+        if (fp == NULL) return -1;
+        fprintf(fp,
+                "Pid: %d, Nome: %s, Descrição: %s, Dono: %s, Data de criação: %d/%d/%d - %d:%d, Data de execução: %d/%d/%d - %d:%d\n",
                 aux->info.ProcessID, aux->info.nomeUtilizador, aux->info.descricao, retornaNome(user, aux->info.dono),
-                aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon, aux->info.tempCriado.tm_year + 1900 , aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min,
-                aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon, aux->info.tempExecutado.tm_year + 1900 , aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min);
+                aux->info.tempCriado.tm_mday, aux->info.tempCriado.tm_mon, aux->info.tempCriado.tm_year + 1900,
+                aux->info.tempCriado.tm_hour, aux->info.tempCriado.tm_min,
+                aux->info.tempExecutado.tm_mday, aux->info.tempExecutado.tm_mon, aux->info.tempExecutado.tm_year + 1900,
+                aux->info.tempExecutado.tm_hour, aux->info.tempExecutado.tm_min);
         fclose(fp);
     }
     return 0;

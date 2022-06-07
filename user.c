@@ -121,8 +121,10 @@ void imprimeListaU(UElemento *iniListaU) {
         return;
     }
     for (aux=iniListaU; aux!=NULL ;aux = aux->next){
-        printf ("\nId: %d - Nome: %s - Palavra Passe: %s - Tipo de User: %d\n",  aux->info.id, aux->info.nomeUtilizador,
-                aux->info.pp, aux->info.tipoDeUtilizador);
+        printf ("\nId: %d - Nome: %s - Palavra Passe: %s",  aux->info.id, aux->info.nomeUtilizador,
+                aux->info.pp);
+        if(aux->info.tipoDeUtilizador == 0) printf("- Tipo de User: Convidado\n");
+        else printf("- Tipo de User: Administrador\n");
     }
 }
 
@@ -141,7 +143,8 @@ void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
             printf("\n Utilizador Encontrado --- [ %d ]", aux->info.id);
             printf("\n 1) Nome: %s",aux->info.nomeUtilizador );
             printf("\n 2) Palavra Passe: %s", aux->info.pp);
-            printf("\n 3) Tipo de utilizador: %d", aux->info.tipoDeUtilizador);
+            if(aux->info.tipoDeUtilizador == 0) printf("3) Tipo de utilizador: Convidado\n");
+            else printf("3) Tipo de utilizador: Administrador\n");
         }
     }
 
@@ -186,7 +189,8 @@ void perfilUser(UElemento *iniListaU, UTILIZADOR dados, int id){
             printf("\n Utilizador --- [ %d ]", aux->info.id);
             printf("\n 1) Nome: %s", aux->info.nomeUtilizador );
             printf("\n 2) Palavra Passe: %s", aux->info.pp);
-            printf("\n 3) Tipo de utilizador: %d", aux->info.tipoDeUtilizador);
+            if(aux->info.tipoDeUtilizador == 0) printf("3) Tipo de utilizador: Convidado\n");
+            else printf("3) Tipo de utilizador: Administrador\n");
         }
     }
     printf("\nPretende alterar dados? Sim(1) ou Não(0)");
