@@ -62,13 +62,12 @@ int gestaoUtilizador(){
         system("cls");
         printf("GESTÃO DE UTILIZADORES\n");
         printf("1 - Inserir Utilizador\n");
-        printf("2 - Remover Utilizador\n");
-        printf("3 - Imprimir Utilizador\n");
-        printf("4 - Editar Utilizador\n");
+        printf("2 - Imprimir Utilizador\n");
+        printf("3 - Editar Utilizador\n");
         printf("0 - Sair\n");
         printf("Escolha a opção desejada: ");
         scanf("%d", &resUtilizador);
-    } while (resUtilizador > 4 || resUtilizador < 0);
+    } while (resUtilizador > 3 || resUtilizador < 0);
     return resUtilizador;
 }
 
