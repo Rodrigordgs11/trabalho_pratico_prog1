@@ -58,13 +58,10 @@ int main(){
                             escreveFicheiroU(Lista);        //escreve no ficheiro
                             break;
                         case 2:
-                            //remover user
-                            break;
-                        case 3:
                             imprimeListaU(Lista);
                             system("pause");
                             break;
-                        case 4:
+                        case 3:
                             alterarUser(Lista, dados);
                             break;
                     }

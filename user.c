@@ -143,7 +143,7 @@ void alterarUser(UElemento *iniListaU, UTILIZADOR dados){
             printf("\n Utilizador Encontrado --- [ %d ]", aux->info.id);
             printf("\n 1) Nome: %s",aux->info.nomeUtilizador );
             printf("\n 2) Palavra Passe: %s", aux->info.pp);
-            if(aux->info.tipoDeUtilizador == 0) printf("3) Tipo de utilizador: Convidado\n");
+            if(aux->info.tipoDeUtilizador == 0) printf("\n3) Tipo de utilizador: Convidado\n");
             else printf("3) Tipo de utilizador: Administrador\n");
         }
     }
